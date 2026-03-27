@@ -60,7 +60,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
         } else {
-            // No token provided → 401 Unauthorized
+
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Missing Authorization header");
             return;

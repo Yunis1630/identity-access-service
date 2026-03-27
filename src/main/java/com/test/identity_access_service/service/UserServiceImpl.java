@@ -34,12 +34,6 @@ public class UserServiceImpl implements UserService {
                         .collect(Collectors.toList())
         );
 
-        authenticatedUser.setPermissions(
-                user.getPermissions().stream()
-                        .map(Enum::name)
-                        .collect(Collectors.toList())
-        );
-
         return authenticatedUser;
     }
 }

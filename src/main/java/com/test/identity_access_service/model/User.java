@@ -33,8 +33,4 @@ public class User {
     @Enumerated(EnumType.STRING)
     private List<Role> roles = new ArrayList<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    private List<Permission> permissions = new ArrayList<>();
-
 }

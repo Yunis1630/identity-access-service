@@ -40,12 +40,11 @@ public class AuthenticatedUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Map roles to ROLE_ prefix
+
         List<GrantedAuthority> roleAuthorities = roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
 
-        // Map permissions directly
         List<GrantedAuthority> permissionAuthorities = permissions.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());

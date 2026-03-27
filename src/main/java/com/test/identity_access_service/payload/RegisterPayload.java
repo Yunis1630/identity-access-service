@@ -1,6 +1,5 @@
 package com.test.identity_access_service.payload;
 
-import com.test.identity_access_service.model.Permission;
 import com.test.identity_access_service.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +16,5 @@ public class RegisterPayload {
     private String surname;
     private String password;
     private List<Role> role;
-    private List<Permission> permission;
 }
 

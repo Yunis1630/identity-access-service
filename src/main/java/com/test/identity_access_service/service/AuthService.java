@@ -31,7 +31,6 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // REGISTER NEW USER
     public void register(RegisterPayload payload) {
         // Check if username already exists
         userRepository.findByUsername(payload.getUsername()).ifPresent(u -> {
@@ -44,14 +43,11 @@ public class AuthService {
         user.setSurname(payload.getSurname());
         user.setPassword(passwordEncoder.encode(payload.getPassword()));
 
-        // Set roles and permissions from payload
         user.setRoles(payload.getRole());
-        user.setPermissions(payload.getPermission());
 
         userRepository.save(user);
     }
 
-    // LOGIN USER
     public LoginDTO login(LoginPayload payload) {
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(payload.getUsername(), payload.getPassword())
@@ -80,12 +76,10 @@ public class AuthService {
                 user.getUsername(),
                 user.getName(),
                 user.getSurname(),
-                user.getRoles(),
-                user.getPermissions()
+                user.getRoles()
         );
     }
 
-    // REFRESH ACCESS TOKEN
     public RefreshTokenDTO refreshToken(RefreshTokenPayload payload) {
         RefreshToken refreshToken = refreshTokenRepository.findByToken(payload.getRefreshToken())
                 .orElseThrow(() -> new RuntimeException("Refresh token not found"));
@@ -97,15 +91,12 @@ public class AuthService {
 
         User user = refreshToken.getUser();
 
-        // Recreate AuthenticatedUser with roles & permissions
         AuthenticatedUser userDetails = new AuthenticatedUser();
         userDetails.setId(user.getId());
         userDetails.setUsername(user.getUsername());
         userDetails.setName(user.getName());
         userDetails.setSurname(user.getSurname());
         userDetails.setRoles(user.getRoles().stream().map(Enum::name).toList());
-        userDetails.setPermissions(user.getPermissions().stream().map(Enum::name).toList());
-
         String newAccessToken = jwtUtil.generateToken(userDetails);
 
         return new RefreshTokenDTO(newAccessToken, refreshToken.getToken());

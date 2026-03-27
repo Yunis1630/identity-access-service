@@ -1,6 +1,5 @@
 package com.test.identity_access_service.dto;
 
-import com.test.identity_access_service.model.Permission;
 import com.test.identity_access_service.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,5 +17,4 @@ public class LoginDTO {
     private String name;
     private String surname;
     private List<Role> roles;
-    private List<Permission> permissions;
 }
